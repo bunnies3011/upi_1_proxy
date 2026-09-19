@@ -1,0 +1,27 @@
+services:
+  ideal-qr-tool:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ideal-qr-tool:latest
+    container_name: ideal-qr-tool
+    ports:
+      # Host BACKEND_PORT (default 8989) -> container 8989. Override:
+      # BACKEND_PORT=9000 ./docker.sh up
+      - "${BACKEND_PORT:-8989}:8989"
+    environment:
+      # Bind 0.0.0.0 trong container (khác dev local bind 127.0.0.1) — port
+      # publish của Docker đã giới hạn truy cập ra ngoài qua mapping trên.
+      IDEAL_QR_TOOL_BIND_HOST: "0.0.0.0"
+      IDEAL_QR_TOOL_DB_PATH: "${IDEAL_QR_TOOL_DB_PATH:-runtime/ideal_qr_tool.db}"
+    volumes:
+      # Persist SQLite DB + session cache + QR PNG qua lần restart/rebuild
+      # container. Cùng thư mục dùng khi chạy dev.sh/setup.sh trên host.
+      - ./backend/runtime:/app/backend/runtime
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8989/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ideal-qr-tool-backend"
+version = "0.2.0"
+description = "Backend cho iDEAL QR Tool — pure-HTTP flow ChatGPT/Stripe/pay.ideal.nl, render QR"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "curl_cffi==0.15.0",
+    "qrcode==8.0",
+    "Pillow==11.1.0",
+    "playwright==1.49.1",
+    "aiosqlite==0.20.0",
+    "sse-starlette==2.2.1",
+    "pydantic==2.10.5",
+    "pyotp==2.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hypothesis==6.123.17",
+    "pytest==8.3.4",
+    "pytest-asyncio==0.25.2",
+]
+
+[project.scripts]
+ideal-qr = "app.cli.main:sync_entry"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

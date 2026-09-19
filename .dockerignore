@@ -1,0 +1,38 @@
+# ideal_qr_tool/.dockerignore — giảm build context, tránh copy nhầm secret/cache.
+
+.git
+.gitignore
+.kiro
+.claude
+README.md
+release/
+tasks/
+
+# Backend — chỉ cần app/ + pyproject.toml + test/setup_default_settings.py
+# (COPY riêng trong Dockerfile). Loại toàn bộ cache/venv/test suite khác.
+backend/.venv
+backend/.hypothesis
+backend/.pytest_cache
+backend/.mypy_cache
+backend/.ruff_cache
+backend/runtime
+backend/tests
+backend/test/*
+!backend/test/setup_default_settings.py
+
+# Frontend — node_modules/dist build lại trong container, không copy từ host.
+frontend/node_modules
+frontend/dist
+
+# Root node_modules (orchestrator scripts dev, không cần trong image).
+node_modules
+
+# Python cache chung
+**/__pycache__
+**/*.pyc
+**/*.pyo
+
+# OS / editor
+.DS_Store
+.vscode
+.idea
