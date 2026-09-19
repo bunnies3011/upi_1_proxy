@@ -1,0 +1,49 @@
+# Dependencies and Python environments
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Build outputs
+dist/
+build/
+release/
+*.tsbuildinfo
+
+# Test and tooling caches
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.vite/
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+
+# Local secrets and generated runtime data
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+runtime/
+*.log
+*.pid
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Editor and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
